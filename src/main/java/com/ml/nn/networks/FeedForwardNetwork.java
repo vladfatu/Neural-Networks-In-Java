@@ -12,7 +12,11 @@ public class FeedForwardNetwork {
     }
     
     public void train() {
-        
+
+    }
+
+    public void validate() {
+
     }
 
     public void feedForward() {
