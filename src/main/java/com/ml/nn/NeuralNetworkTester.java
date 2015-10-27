@@ -94,6 +94,9 @@ public class NeuralNetworkTester {
 
         System.out.println("time for ejml: " + (System.currentTimeMillis() - timestamp));
 
+        double x1 = matrix1.get(0, 1);
+        System.out.println(x1);
+
 //        matrix.mprint(x);
 //        matrix.mprint(y);
 //        matrix.mprint(z);

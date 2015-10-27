@@ -1,7 +1,5 @@
 package com.ml.nn.networks;
 
-import mikera.arrayz.NDArray;
-import mikera.randomz.Randomz;
 
 /**
  * Created by vladfatu on 18/09/2015.
