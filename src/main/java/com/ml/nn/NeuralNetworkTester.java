@@ -1,7 +1,11 @@
 package com.ml.nn;
 
+import com.ml.nn.layers.LinearLayer;
+import com.ml.nn.layers.SoftmaxLayer;
 import com.ml.nn.networks.FeedForwardNetwork;
 import org.ejml.simple.SimpleMatrix;
+
+import java.util.Random;
 
 /**
  * Created by vladfatu on 18/09/2015.
@@ -75,31 +79,43 @@ public class NeuralNetworkTester {
 
         };
 
-        Matrix matrix = new Matrix();
-        long timestamp = System.currentTimeMillis();
+//        Matrix matrix = new Matrix();
+//        long timestamp = System.currentTimeMillis();
+//
+//        for (int i=0; i<1000000; i++) {
+//            int z[][] = matrix.multiply(x, y);
+//        }
+//
+//        System.out.println("time for normal: " + (System.currentTimeMillis() - timestamp));
+//        timestamp = System.currentTimeMillis();
+//
+//        SimpleMatrix matrix1 = new SimpleMatrix(x);
+//        SimpleMatrix matrix2 = new SimpleMatrix(y);
+//
+//        for (int i=0; i<1000000; i++) {
+//            matrix1.mult(matrix2);
+//        }
+//
+//        System.out.println("time for ejml: " + (System.currentTimeMillis() - timestamp));
 
-        for (int i=0; i<1000000; i++) {
-            int z[][] = matrix.multiply(x, y);
-        }
+//        double x1 = matrix1.get(0, 1);
+//        System.out.println(x1);
 
-        System.out.println("time for normal: " + (System.currentTimeMillis() - timestamp));
-        timestamp = System.currentTimeMillis();
 
-        SimpleMatrix matrix1 = new SimpleMatrix(x);
-        SimpleMatrix matrix2 = new SimpleMatrix(y);
+        SimpleMatrix biasVector = new SimpleMatrix(3,1);
+        biasVector.zero();
 
-        for (int i=0; i<1000000; i++) {
-            matrix1.mult(matrix2);
-        }
+        SimpleMatrix weightMatrix = new SimpleMatrix(3, 4);
+        weightMatrix.zero();
+        weightMatrix = weightMatrix.plus(1);
+        weightMatrix.print();
+        LinearLayer layer = new SoftmaxLayer();
+        layer.setWeightMatrix(weightMatrix);
+        layer.setBiasVector(biasVector);
 
-        System.out.println("time for ejml: " + (System.currentTimeMillis() - timestamp));
-
-        double x1 = matrix1.get(0, 1);
-        System.out.println(x1);
-
-//        matrix.mprint(x);
-//        matrix.mprint(y);
-//        matrix.mprint(z);
+        SimpleMatrix inputVector = SimpleMatrix.random(4, 1, 0, 255, new Random());
+        inputVector.print();
+        layer.forwardPropagate(inputVector).print();
 
     }
 
