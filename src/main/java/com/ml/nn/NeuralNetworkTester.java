@@ -2,9 +2,15 @@ package com.ml.nn;
 
 import com.ml.nn.layers.LinearLayer;
 import com.ml.nn.layers.SoftmaxLayer;
+import com.ml.nn.model.Model;
 import com.ml.nn.networks.FeedForwardNetwork;
 import org.ejml.simple.SimpleMatrix;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Random;
 
 /**
@@ -101,21 +107,29 @@ public class NeuralNetworkTester {
 //        double x1 = matrix1.get(0, 1);
 //        System.out.println(x1);
 
+        try {
+            Model model = ModelReader.readModel();
+            SimpleMatrix inputVector = SimpleMatrix.random(4, 1, 0, 255, new Random());
+            model.validate(inputVector).print();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        SimpleMatrix biasVector = new SimpleMatrix(3,1);
-        biasVector.zero();
-
-        SimpleMatrix weightMatrix = new SimpleMatrix(3, 4);
-        weightMatrix.zero();
-        weightMatrix = weightMatrix.plus(1);
-        weightMatrix.print();
-        LinearLayer layer = new SoftmaxLayer();
-        layer.setWeightMatrix(weightMatrix);
-        layer.setBiasVector(biasVector);
-
-        SimpleMatrix inputVector = SimpleMatrix.random(4, 1, 0, 255, new Random());
-        inputVector.print();
-        layer.forwardPropagate(inputVector).print();
+//        SimpleMatrix biasVector = new SimpleMatrix(3,1);
+//        biasVector.zero();
+//
+//        SimpleMatrix weightMatrix = new SimpleMatrix(3, 4);
+//        weightMatrix.zero();
+//        weightMatrix = weightMatrix.plus(1);
+//        weightMatrix.print();
+//        LinearLayer layer = new SoftmaxLayer();
+//        layer.setWeightMatrix(weightMatrix);
+//        layer.setBiasVector(biasVector);
+//
+//
+//        SimpleMatrix inputVector = SimpleMatrix.random(4, 1, 0, 255, new Random());
+//        inputVector.print();
+//        layer.forwardPropagate(inputVector).print();
 
     }
 

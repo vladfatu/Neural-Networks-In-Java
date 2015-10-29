@@ -9,4 +9,12 @@ public interface Layer {
 
     SimpleMatrix forwardPropagate(SimpleMatrix inpuVector);
 
+    void setWeightMatrix(SimpleMatrix weightMatrix);
+
+    SimpleMatrix getWeightMatrix();
+
+    void setBiasVector(SimpleMatrix biasVector);
+
+    SimpleMatrix getBiasVector();
+
 }
