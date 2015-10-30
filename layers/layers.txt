@@ -1,1 +1,2 @@
+SigmoidLayer 4 10
 SoftmaxLayer 3 4

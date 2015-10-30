@@ -13,7 +13,7 @@ public class SigmoidLayer extends LinearLayer{
 
     private SimpleMatrix sigmoid(SimpleMatrix vector) {
         for (int i=0; i< vector.getNumElements(); i++) {
-            vector.set(i, sigmoid(vector.get(0, i)));
+            vector.set(i, sigmoid(vector.get(i, 0)));
         }
         return vector;
     }
