@@ -6,6 +6,7 @@ import com.ml.nn.layers.SoftmaxLayer;
 import com.ml.nn.model.Model;
 import org.ejml.simple.SimpleMatrix;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -31,8 +32,8 @@ public class ModelReader {
 
     private static Layer readLayer(int index, String description) throws IOException {
         Layer layer = getLayerForDescription(description);
-        layer.setWeightMatrix(readMatrix("layers/weights" + index + ".txt", description));
-        layer.setBiasVector(readMatrix("layers/bias" + index + ".txt", layer.getWeightMatrix().getMatrix().numRows, 1));
+        layer.setWeightMatrix(readMatrix("layers" + File.separator + "weights" + index + ".txt", description));
+        layer.setBiasVector(readMatrix("layers" + File.separator + "bias" + index + ".txt", layer.getWeightMatrix().getMatrix().numRows, 1));
         return layer;
     }
 

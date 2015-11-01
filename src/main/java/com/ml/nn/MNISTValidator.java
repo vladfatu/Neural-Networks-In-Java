@@ -60,12 +60,28 @@ public class MNISTValidator {
 
     private boolean validateImage(Model model, double[][] image, byte label) {
         SimpleMatrix inputVector = new SimpleMatrix(image);
+        printMatrix(inputVector);
+        System.out.println();
         inputVector.reshape(784, 1);
         SimpleMatrix outputVector = model.validate(inputVector);
+        outputVector.print();
 //        outputVector.print();
         MNISTAnalyzer analyzer = new MNISTAnalyzer();
         int digit = analyzer.getDigit(outputVector);
         return digit == label;
+    }
+
+    private static void printMatrix(SimpleMatrix mat) {
+        for (int i=0; i<28; i++) {
+            for (int j=0; j<28; j++) {
+                if (mat.get(i, j) > 0) {
+                    System.out.print(" ");
+                } else {
+                    System.out.print("0");
+                }
+            }
+            System.out.println();
+        }
     }
 
     private void checkImagesAndLabelsCounts(int numLabels, int numImages) {
