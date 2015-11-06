@@ -21,11 +21,12 @@ public class NeuralNetworkTester {
 //        }
 
         try {
-            Model model = ModelReader.readModel();
+            ModelReader modelReader = new ModelReader();
+            Model model = modelReader.readModel();
 //            SimpleMatrix inputVector = SimpleMatrix.random(10, 1, 0, 255, new Random());
 //            model.validate(inputVector).print();
-            MNISTValidator reader = new MNISTValidator();
-            reader.validate(model);
+            MNISTValidator validator = new MNISTValidator();
+            validator.validate(model);
         } catch (IOException e) {
             e.printStackTrace();
         }

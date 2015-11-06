@@ -65,7 +65,6 @@ public class MNISTValidator {
         inputVector.reshape(784, 1);
         SimpleMatrix outputVector = model.validate(inputVector);
         outputVector.print();
-//        outputVector.print();
         MNISTAnalyzer analyzer = new MNISTAnalyzer();
         int digit = analyzer.getDigit(outputVector);
         return digit == label;

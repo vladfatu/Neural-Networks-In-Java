@@ -8,11 +8,14 @@ import org.ejml.simple.SimpleMatrix;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 /**
@@ -20,24 +23,28 @@ import java.util.StringTokenizer;
  */
 public class ModelReader {
 
-    public static Model readModel() throws IOException {
+    public Model readModel() throws IOException {
         Model model = new Model();
-        Path path = Paths.get("layers", "layers.txt");
-        List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("layers.txt");
+        Scanner scanner = new Scanner(inputStream);
+        List<String> lines = new ArrayList<>();
+        while (scanner.hasNext()) {
+            lines.add(scanner.nextLine());
+        }
         for (int i = 0; i < lines.size(); i++) {
             model.addLayer(readLayer(i, lines.get(i)));
         }
         return model;
     }
 
-    private static Layer readLayer(int index, String description) throws IOException {
+    private Layer readLayer(int index, String description) throws IOException {
         Layer layer = getLayerForDescription(description);
-        layer.setWeightMatrix(readMatrix("layers" + File.separator + "weights" + index + ".txt", description));
-        layer.setBiasVector(readMatrix("layers" + File.separator + "bias" + index + ".txt", layer.getWeightMatrix().getMatrix().numRows, 1));
+        layer.setWeightMatrix(readMatrix("weights" + index + ".txt", description));
+        layer.setBiasVector(readMatrix("bias" + index + ".txt", layer.getWeightMatrix().getMatrix().numRows, 1));
         return layer;
     }
 
-    private static Layer getLayerForDescription(String description) {
+    private Layer getLayerForDescription(String description) {
         if (description.startsWith("Sigmoid")) {
             return new SigmoidLayer();
         } else {
@@ -45,7 +52,7 @@ public class ModelReader {
         }
     }
 
-    private static SimpleMatrix readMatrix(String path, String description) throws IOException {
+    private SimpleMatrix readMatrix(String path, String description) throws IOException {
         StringTokenizer tokenizer = new StringTokenizer(description);
         tokenizer.nextToken();
         int rows = Integer.decode(tokenizer.nextToken());
@@ -53,9 +60,17 @@ public class ModelReader {
         return readMatrix(path, rows, columns);
     }
 
-    private static SimpleMatrix readMatrix(String path, int rows, int columns) throws IOException {
+    private SimpleMatrix readMatrix(String path, int rows, int columns) throws IOException {
         SimpleMatrix simpleMatrix = new SimpleMatrix(rows, columns);
-        simpleMatrix = simpleMatrix.loadCSV(path);
+
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
+        Scanner scanner = new Scanner(inputStream);
+        scanner.nextLine();
+        for (int i=0; i<rows; i++) {
+            for (int j=0; j<columns; j++) {
+                simpleMatrix.set(i, j, scanner.nextDouble());
+            }
+        }
         return simpleMatrix;
     }
 

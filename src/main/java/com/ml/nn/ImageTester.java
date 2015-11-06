@@ -31,7 +31,8 @@ public class ImageTester {
 
     private static void validateImage(double[][] image) {
         try {
-            Model model = ModelReader.readModel();
+            ModelReader modelReader = new ModelReader();
+            Model model = modelReader.readModel();
             SimpleMatrix input = new SimpleMatrix(image);
             input = input.transpose();
 //            input.print();
