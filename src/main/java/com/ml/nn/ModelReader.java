@@ -68,7 +68,8 @@ public class ModelReader {
         scanner.nextLine();
         for (int i=0; i<rows; i++) {
             for (int j=0; j<columns; j++) {
-                simpleMatrix.set(i, j, scanner.nextDouble());
+                double nextValue = Double.parseDouble(scanner.next());
+                simpleMatrix.set(i, j, nextValue);
             }
         }
         return simpleMatrix;

@@ -48,8 +48,6 @@ public class MNISTValidator {
                 validImages++;
             }
 
-            // At this point, 'label' and 'image' agree and you can do whatever you like with them.
-
         }
         System.out.println();
         long end = System.currentTimeMillis();
@@ -60,11 +58,11 @@ public class MNISTValidator {
 
     private boolean validateImage(Model model, double[][] image, byte label) {
         SimpleMatrix inputVector = new SimpleMatrix(image);
-        printMatrix(inputVector);
-        System.out.println();
+//        printMatrix(inputVector);
+//        System.out.println();
         inputVector.reshape(784, 1);
         SimpleMatrix outputVector = model.validate(inputVector);
-        outputVector.print();
+//        outputVector.print();
         MNISTAnalyzer analyzer = new MNISTAnalyzer();
         int digit = analyzer.getDigit(outputVector);
         return digit == label;
